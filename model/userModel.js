@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import bcrypt from "bcryptjs";
 
 const userSchema = new Schema({
   email: {
@@ -14,5 +15,9 @@ const userSchema = new Schema({
     required: [true, "User must have a password"],
   },
 });
+
+userSchema.methods.correctPassword = async (pass, userPass) => {
+  return await bcrypt.compare(pass, userPass);
+};
 
 export const UserModel = model("User", userSchema);
