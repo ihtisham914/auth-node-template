@@ -16,8 +16,4 @@ const userSchema = new Schema({
   },
 });
 
-userSchema.methods.correctPassword = async (pass, userPass) => {
-  return await bcrypt.compare(pass, userPass);
-};
-
 export const UserModel = model("User", userSchema);

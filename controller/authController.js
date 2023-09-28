@@ -56,11 +56,11 @@ export const LogIn = async (req, res, next) => {
     }
 
     // if user exists and password is correct
-    const user = await UserModel.findOne({ email }).select("+password");
+    const user = await UserModel.findOne({ email });
     const correct = await bcrypt.compare(password, user.password);
 
     if (!user || !correct) {
-      next(AppError("Incorrect email or password", 401));
+      next(new AppError("Incorrect email or password", 401));
     }
     // if everything is okey, send token to the client
     const token = signToken(user);
